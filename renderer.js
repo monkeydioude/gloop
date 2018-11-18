@@ -6,11 +6,11 @@ var Renderer = function(sceneCanvas, bufferCanvas) {
 
 /**
  * Draw a rectangle
- * @param {*} x 
- * @param {*} y 
- * @param {*} w 
- * @param {*} h 
- * @param {*} color 
+ * @param {int|float} x 
+ * @param {int|float*} y 
+ * @param {int} w 
+ * @param {int} h 
+ * @param {string} color 
  */
 Renderer.prototype.draw = function(x, y, w, h, color) {
    this.buffer.draw(x, y, w, h, color);
@@ -18,27 +18,27 @@ Renderer.prototype.draw = function(x, y, w, h, color) {
 
 /**
  * Draw ImageData element onto engine's canvas
- * @param {*} imgData 
- * @param {*} x 
- * @param {*} y 
- * @param {*} w 
- * @param {*} h 
- * @param {*} dx 
- * @param {*} dy 
+ * @param {ImageData} imgData 
+ * @param {int|float} x 
+ * @param {int|float} y 
+ * @param {int} w 
+ * @param {int} h 
+ * @param {int|float} dx 
+ * @param {int|float} dy 
  */
 Renderer.prototype.drawImageData = function(imgData, x, y, w, h, dx, dy) {
     this.buffer.drawImageData(imgData, x, y, w, h, dx, dy);
 }
 /**
  * Draw Image element onto engine's canvas
- * @param {*} Image 
- * @param {*} x 
- * @param {*} y 
- * @param {*} w 
- * @param {*} h 
+ * @param {Image} Image 
+ * @param {int|float} x 
+ * @param {int|float} y 
+ * @param {int} w 
+ * @param {int} h 
  */
 Renderer.prototype.drawImage = function(image, x, y, w, h) {
-    this.buffer.drawImage(image.getAsset(), x + image.getDecalX(), y + image.getDecalY(), w, h);
+    this.buffer.drawImage(image, x, y, w, h);
 }
 
 Renderer.prototype.drawLine = function(fX, fY, tX, tY) {

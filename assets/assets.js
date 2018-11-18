@@ -23,7 +23,7 @@ Assets.prototype.loadImage = function(name, data) {
         data.dy = 0;
     }
 
-    this.assets[name] = new Img(name, data.src, data.dx, data.dy);
+    this.assets[name] = new Img(name, data.src, data.dx, data.dy, data.w, data.h);
     
     this.assetLoadingIt++;
     this.assets[name].onload = function() {
