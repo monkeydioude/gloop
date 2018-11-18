@@ -1,6 +1,6 @@
 var Updater = require('./updater');
 
-var Loop = function(fps, engine, startingMode)
+var Loop = function(fps, renderer, startingMode)
 {
     if (!fps) {
         console.error("fps parameter needed");
@@ -12,7 +12,7 @@ var Loop = function(fps, engine, startingMode)
     this.cbSeed = null;
 
     this.setFrequencies(fps);
-    this.engine = engine;
+    this.renderer = renderer;
     this.dataUpdater = new Updater("data");
     this.displayUpdater = new Updater("graphic");
     this.mode = startingMode;
@@ -36,7 +36,7 @@ Loop.prototype.pause = function() {
 
 Loop.prototype.start = function() {
     if (!this.canStart()) {
-        this.engine.scene.c.fillText("Loading...", 360, 295);            
+        this.renderer.scene.c.fillText("Loading...", 360, 295);            
         setTimeout(this.start.bind(this), this.miF);
         return;
     }
@@ -91,10 +91,10 @@ Loop.prototype.displayLoop = function(T) {
     var nT = window.performance.now(),
         updStatus = 0;
 
-    updStatus = this.displayUpdater.update(this.mode, T, this.engine);
+    updStatus = this.displayUpdater.update(this.mode, T, this.renderer);
     
     if (updStatus > 0) {
-        this.engine.render();
+        this.renderer.render();
     }
     this.dSeed = setTimeout(function(){this.displayLoop(this.miF);}.bind(this), T - (window.performance.now() - nT));
 }
