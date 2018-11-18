@@ -1,0 +1,20 @@
+{
+  "name": "gloop",
+  "version": "0.0.1",
+  "description": "game loop and canvas drawer",
+  "main": "index.js",
+
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/monkeydioude/gloop.git"
+  },
+  "author": "monkeydioude",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/monkeydioude/gloop/issues"
+  },
+  "homepage": "https://github.com/monkeydioude/gloop#readme"
+}
