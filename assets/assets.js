@@ -1,9 +1,31 @@
 var CouldNotLoad = require('../errors/couldNotLoad'),
     Img = require('./img');
 
-var Assets = function() {
+var Assets = function(basePath) {
     this.assets = [];
     this.stillLoadingIt = 0;
+    this.basePath = basePath;
+}
+
+Assets.prototype.loadFramesets = function(fss) {
+    var req = null,
+        self = this;
+
+    for (i = 0; i < fss.length; i++) {
+        req = new Request('../assets/frameset/rebot.json');
+        fetch(req).then(function(res) {
+            self.stillLoadingIt++;
+            res.json().then(function(data) {
+                self.loadImage(data.meta.name, {
+                    src: self.basePath + "/frameset/" + data.meta.file,
+                    x: 0,
+                    y: 0,
+                    w: data.meta.size.w,
+                    h: data.meta.size.h
+                })
+            });
+        })
+    }
 }
 
 /**
