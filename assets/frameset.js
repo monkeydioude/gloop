@@ -1,54 +1,43 @@
-var Frameset = function(name, src, dX, dY, w, h) {
+var Frameset = function(name, frames, sprite) {
     if (name === undefined) {
-        console.error("An Image requires a name");
+        console.error("A Frameset requires a name");
     }
-    if (src === undefined) {
-        console.error("An Image requires a source");
+    if (frames === undefined) {
+        console.error("A Frameset requires frames");
     }
-    if (dX === undefined) {
-        dX = 0;
-    }
-    if (dY === undefined) {
-        dY = 0;
-    }
-    if (w === undefined) {
-        w = 64;
-    }
-    if (h === undefined) {
-        h = 64;
+    if (sprite === undefined) {
+        console.error("A Frameset requires a sprite (et ca redemarre)");
     }
     this.name = name;
-    this.src = src;
-    this.dX = dX;
-    this.dY = dY;
-    this.w = w;
-    this.h = h;
-    this.asset = new Image()
-    this.asset.src = src;
-    this.asset.crossOrigin = "Anonymous";
+    this.frames = frames;
+    this.sprite = sprite;
 }
 
-Img.prototype.getDecalX = function() {
-    return this.dX;
+Frameset.prototype.getNext = function () {
+
 }
 
-Img.prototype.getDecalY = function() {
-    return this.dY;
-}
+// Img.prototype.getDecalX = function() {
+//     return this.dX;
+// }
 
-Img.prototype.getDecal = function() {
-    return {
-        x: this.getDecalX(),
-        y: this.getDecalY()
-    }
-}
+// Img.prototype.getDecalY = function() {
+//     return this.dY;
+// }
 
-Img.prototype.getAsset = function() {
-    return this.asset;
-}
+// Img.prototype.getDecal = function() {
+//     return {
+//         x: this.getDecalX(),
+//         y: this.getDecalY()
+//     }
+// }
 
-Img.prototype.render = function (renderer, x, y) {
-    renderer.drawImage(this.getAsset(), x + this.getDecalX(), y + this.getDecalY(), this.w, this.h);
-}
+// Img.prototype.getAsset = function() {
+//     return this.asset;
+// }
+
+// Img.prototype.render = function (renderer, x, y) {
+//     renderer.drawImage(this.getAsset(), x + this.getDecalX(), y + this.getDecalY(), this.w, this.h);
+// }
 
 module.exports = Frameset;
