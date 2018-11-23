@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "description": "game loop and canvas drawer",
   "main": "index.js",
-
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/monkeydioude/gloop/issues"
   },
-  "homepage": "https://github.com/monkeydioude/gloop#readme"
+  "homepage": "https://github.com/monkeydioude/gloop#readme",
+  "dependencies": {
+    "@types/node": "^10.12.10"
+  }
 }

@@ -66,6 +66,7 @@ Assets.prototype.load = function(assetObject, cb) {
             break;
             case 'frameset':
                 this.loadFrameset(k, assetObject[k].data, assetObject[k].frames, cb);
+            break;
             default:
                 console.log("Dunno how to load this Mista")
         }
