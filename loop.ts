@@ -1,6 +1,5 @@
-var Updater = require('./updater')
-
 import {Renderer} from "./renderer"
+import {Updater} from "./updater"
 
 export class Loop {
     cbSeed: NodeJS.Timeout
@@ -48,7 +47,7 @@ export class Loop {
         if (!this.canStart()) {
             this.renderer.scene.c.fillText("Loading...", 360, 295)
             setTimeout(this.start.bind(this), this.miF)
-            return;
+            return
         }
 
         console.info("started")
@@ -63,12 +62,12 @@ export class Loop {
                 return false
             }
         }
-        return true;
+        return true
     }
 
     // addStartingConditions adds bulk starting conditions (array of func)
     addStartingConditions(conditions: any): void {
-        this.startingConditions = conditions;
+        this.startingConditions = conditions
     }
 
     // dataLoop is an iteration of the data loop, it calls itself perpetually through setTimeout
@@ -82,13 +81,13 @@ export class Loop {
     // displayLoop is an iteration of the display loop, it calls itself perpetually through setTimeout
     displayLoop(T: number): void {
         let nT = window.performance.now(),
-            updStatus = 0;
+            updStatus = 0
 
-        updStatus = this.displayUpdater.update(this.mode, T, this.renderer);
+        updStatus = this.displayUpdater.update(this.mode, T, this.renderer)
         
         if (updStatus > 0) {
-            this.renderer.render();
+            this.renderer.render()
         }
-        this.dSeed = setTimeout((): void => this.displayLoop(this.miF), T - (window.performance.now() - nT));
+        this.dSeed = setTimeout((): void => this.displayLoop(this.miF), T - (window.performance.now() - nT))
     }
 }
