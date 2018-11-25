@@ -2,25 +2,21 @@ import {Img} from "./img"
 import {Frameset} from "./frameset"
 import {CouldNotLoad} from '../errors/couldNotLoad'
 import {Error} from '../errors/error'
+import {Asset} from "./asset"
 
-
-export class Assets {
-    assets: any = []
+export class Loader {
+    assets: {[name: string]: Asset} = {}
     stillLoadingIt: number = 0
     loadedCb: any = []
 
     constructor(public basePath: string) {}
 
     loadFrameset(name: string, data: any, frameset: any, cb: any) {
-        var img = new Img(name, data);
-
-        img.loadWithCallback(
-            (img: any) => {
-                var fs = new Frameset(name, frameset, img);
-                this.assets[data.name] = fs;
-                cb(fs)
-            }
-        )
+        this.loadImage(name, data, (img: any) => {
+            var fs = new Frameset(name, frameset, img);
+            this.assets[name] = fs;
+            cb(fs)
+        })
     }
 
     /**

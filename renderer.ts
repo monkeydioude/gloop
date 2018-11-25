@@ -15,8 +15,8 @@ export class Renderer {
     }
 
     // Draw Image element onto engine's canvas
-    drawImage(image: HTMLImageElement, x: number, y: number, w: number, h: number) {
-        this.buffer.drawImage(image, x, y, w, h)
+    drawImage(image: HTMLImageElement, x: number, y: number, w: number, h: number, sx?: number, sy?: number) {
+        this.buffer.drawImage(image, x, y, w, h, sx, sy)
     }
 
     render() {

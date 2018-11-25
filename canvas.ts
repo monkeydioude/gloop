@@ -13,13 +13,15 @@ export class Canvas {
         this.c.stroke()
     }
 
-    drawImage(img: HTMLImageElement, x: number, y: number, w: number, h: number): void {
+    drawImage(img: HTMLImageElement, x: number, y: number, w: number, h: number, sx?: number, sy?: number): void {
         if (!x) x = 0
         if (!y) y = 0
         if (!w) w = this.width()
         if (!h) h = this.height()
+        if (!sx) sx = 0
+        if (!sy) sy = 0
 
-        this.c.drawImage(img, x, y, w, h);
+        this.c.drawImage(img, sx, sy, w, h, x, y, w, h);
     }
 
     width(): number {

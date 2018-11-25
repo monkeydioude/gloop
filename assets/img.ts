@@ -2,7 +2,6 @@ import {Renderer} from "../renderer"
 import {XY} from "../xy"
 
 export class Img {
-    src: string
     dx: number
     dy: number
     w: number
@@ -10,14 +9,8 @@ export class Img {
     asset: HTMLImageElement
 
     constructor(public name: string, data: any) {
-        if (!data.hasOwnProperty("src")) {
+        if (data.src === undefined) {
             console.error("An Image requires a source") ;
-        }
-        if (!data.hasOwnProperty("dx")) {
-            data.dx = 0
-        }
-        if (!data.hasOwnProperty("dy")) {
-            data.dy = 0
         }
         if (data.dx === undefined) {
             data.dx = 0
@@ -31,7 +24,6 @@ export class Img {
         if (data.h === undefined) {
             data.h = 64
         }
-        this.src = data.src
         this.dx = data.dx
         this.dy = data.dy
         this.w = data.w
@@ -60,7 +52,7 @@ export class Img {
         return this.asset
     }
 
-    render(renderer: Renderer, x: number, y: number) {
+    render(renderer: Renderer, x: number, y: number, T?: number): void {
         renderer.drawImage(this.getAsset(), x + this.getDecalX(), y + this.getDecalY(), this.w, this.h)
     }
 
