@@ -1,21 +1,12 @@
-var Frameset = function(name, frames, sprite) {
-    if (name === undefined) {
-        console.error("A Frameset requires a name");
-    }
-    if (frames === undefined) {
-        console.error("A Frameset requires frames");
-    }
-    if (sprite === undefined) {
-        console.error("A Frameset requires a sprite (et ca redemarre)");
-    }
-    this.name = name;
-    this.frames = frames;
-    this.sprite = sprite;
+import {Img} from "./img"
+
+export class Frameset {
+    constructor(public name: string, public frames: any, public sprite: Img) {}
 }
 
-Frameset.prototype.getNext = function () {
+// Frameset.prototype.getNext = function () {
 
-}
+// }
 
 // Img.prototype.getDecalX = function() {
 //     return this.dX;
@@ -39,5 +30,3 @@ Frameset.prototype.getNext = function () {
 // Img.prototype.render = function (renderer, x, y) {
 //     renderer.drawImage(this.getAsset(), x + this.getDecalX(), y + this.getDecalY(), this.w, this.h);
 // }
-
-module.exports = Frameset;
