@@ -17,6 +17,7 @@ export class Frame {
 
     render(renderer: Renderer, x: number, y: number, T?: number): void {
         this.stackedTime+= T
+        // console.log(this.sprite.getDecalX())
         renderer.drawImage(this.sprite.getAsset(), x + this.sprite.getDecalX(), y + this.sprite.getDecalY(), this.w, this.h, this.sx, this.sy)
     }
 

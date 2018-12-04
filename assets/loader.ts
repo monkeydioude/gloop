@@ -1,5 +1,6 @@
 import {Img} from "./img"
 import {Frameset} from "./frameset"
+import {NotLoadedYet} from "./notLoadedYet"
 import {CouldNotLoad} from '../errors/couldNotLoad'
 import {Error} from '../errors/error'
 import {Asset} from "./asset"
@@ -13,7 +14,8 @@ export class Loader {
 
     loadFrameset(name: string, data: any, frameset: any, cb: any) {
         this.loadImage(name, data, (img: any) => {
-            var fs = new Frameset(name, frameset, img);
+            var fs = new Frameset(name, img);
+            fs.parseFrames(frameset)
             this.assets[name] = fs;
             cb(fs)
         })
@@ -81,7 +83,6 @@ export class Loader {
     hasFinishedLoading(): boolean {
         return this.stillLoadingIt === 0;
     }
-
     
     /**
      * @returns Asset
@@ -92,6 +93,18 @@ export class Loader {
         }
 
         return this.assets[name];
+    }
+
+    /**
+     * @returns Asset
+     */
+    copy(name: string) {
+        if (this.assets[name] == undefined) {
+            this.assets[name] = new NotLoadedYet(this.assets, name);
+            return this.assets[name];
+        }
+
+        return this.assets[name].copy();
     }
 
     onLoaded(cb: any): void {

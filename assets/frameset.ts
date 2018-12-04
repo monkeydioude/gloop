@@ -7,8 +7,7 @@ export class Frameset {
     fit: number = 0
     currentFrame: Frame
 
-    constructor(public name: string, framesData: any, public sprite: Img) {
-        this.parseFrames(framesData)
+    constructor(public name: string, public sprite: Img) {
     }
 
     render(renderer: Renderer, x: number, y: number, T?: number): void {
@@ -16,10 +15,6 @@ export class Frameset {
 
         this.currentFrame.render(renderer, x, y, T)
         this.iterateFrame()
-    }
-
-    getAsset(): any {
-        return this.sprite.getAsset()
     }
 
     parseFrames(framesData: any): void {
@@ -46,5 +41,17 @@ export class Frameset {
         }
         this.currentFrame.reset()
         this.fit++
+    }
+
+    getAsset(): HTMLImageElement {
+        return this.sprite.getAsset()
+    }
+
+    copy(): Frameset {
+        let f: Frameset = new Frameset(this.name, this.sprite.copy())
+        f.frames = this.frames
+        f.fit = 0
+        f.setCurrentFrame()
+        return f
     }
 }

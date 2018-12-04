@@ -6,6 +6,7 @@ export class Img {
     dy: number
     w: number
     h: number
+    src: string
     asset: HTMLImageElement
 
     constructor(public name: string, data: any) {
@@ -28,9 +29,7 @@ export class Img {
         this.dy = data.dy
         this.w = data.w
         this.h = data.h
-        this.asset = new Image()
-        this.asset.src = data.src
-        this.asset.crossOrigin = "Anonymous"
+        this.src = data.src
     }
 
     getDecalX(): number {
@@ -52,11 +51,30 @@ export class Img {
         return this.asset
     }
 
+    setAsset(i: HTMLImageElement): void {
+        this.asset = i
+    }
+
+    copy(): Img {
+        let a = new Img(this.name, {
+            dx: this.dx,
+            dy: this.dy,
+            w: this.w,
+            h: this.w,
+            src: this.src
+        })
+        a.setAsset(this.getAsset())
+        return a
+    }
+
     render(renderer: Renderer, x: number, y: number, T?: number): void {
         renderer.drawImage(this.getAsset(), x + this.getDecalX(), y + this.getDecalY(), this.w, this.h)
     }
 
     loadWithCallback(cb: any) {
+        this.asset = new Image()
+        this.asset.src = this.src
+        this.asset.crossOrigin = "Anonymous"
         this.asset.onload = cb
     }
 }
