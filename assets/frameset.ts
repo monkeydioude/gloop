@@ -13,13 +13,13 @@ export class Frameset {
     render(renderer: Renderer, x: number, y: number, T?: number): void {
         this.setCurrentFrame()
 
-        this.currentFrame.render(renderer, x, y, T)
+        this.currentFrame.render(renderer, this.sprite, x, y, T)
         this.iterateFrame()
     }
 
     parseFrames(framesData: any): void {
         for (let i = 0; i < framesData.length; i++) {
-            this.frames.push(new Frame(framesData[i].frame, framesData[i].duration, this.sprite))
+            this.frames.push(new Frame(framesData[i].frame, framesData[i].duration))
         }
         this.currentFrame = this.frames[0]
     }

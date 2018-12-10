@@ -36,8 +36,16 @@ export class Img {
         return this.dx
     }
 
+    addDecalX(x: number): void {
+        this.dx += x
+    }
+
     getDecalY(): number {
         return this.dy
+    }
+
+    addDecalY(y: number): void {
+        this.dy += y
     }
 
     getDecal(): XY {

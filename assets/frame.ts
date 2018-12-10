@@ -8,17 +8,17 @@ export class Frame {
     h: number
     stackedTime: number = 0
 
-    constructor(frameData: any, public duration: number, public sprite: Img) {
+    constructor(frameData: any, public duration: number) {
         this.sx = frameData.x
         this.sy = frameData.y
         this.w = frameData.w
         this.h = frameData.h
     }
 
-    render(renderer: Renderer, x: number, y: number, T?: number): void {
+    render(renderer: Renderer, sprite: Img, x: number, y: number, T?: number): void {
         this.stackedTime+= T
-        // console.log(this.sprite.getDecalX())
-        renderer.drawImage(this.sprite.getAsset(), x + this.sprite.getDecalX(), y + this.sprite.getDecalY(), this.w, this.h, this.sx, this.sy)
+        // console.log(y, this.sprite.getDecalY(), y + this.sprite.getDecalY())
+        renderer.drawImage(sprite.getAsset(), x + sprite.getDecalX(), y + sprite.getDecalY(), this.w, this.h, this.sx, this.sy)
     }
 
     reset() {

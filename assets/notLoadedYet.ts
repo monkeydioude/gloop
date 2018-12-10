@@ -13,7 +13,7 @@ export class NotLoadedYet {
     }
 
     copy(): Asset {
-        if (this.assets[this.name] == undefined) {
+        if (this.assets[this.name] == undefined || this.assets[this.name] == this) {
             return this
         }
         return this.assets[this.name].copy()
