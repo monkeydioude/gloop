@@ -1,22 +1,17 @@
-import {Renderer} from "./renderer"
-import {Updater} from "./updater"
+import {Updater} from "./updater/updater"
+import {StateMachine} from "./stateMachine"
 
 export class Loop {
     cbSeed: NodeJS.Timeout
     dSeed: NodeJS.Timeout
-    dataUpdater: any
-    displayUpdater: any
-    mode: string
     startingConditions: any = []
     pT: number = 0
     fps: number
     iF: number
     miF: number
 
-    constructor(fps: number, public renderer: Renderer) {
+    constructor(fps: number, public state: StateMachine, public displayUpdater: Updater, public dataUpdater: Updater) {
         this.setFrequencies(fps)
-        this.dataUpdater = new Updater("data")
-        this.displayUpdater = new Updater("display")
     }
     /**
      * setFrequencies sets fps, iF & miF
@@ -30,12 +25,6 @@ export class Loop {
         console.info("setFrequencies("+fps+") = {", "\n\tfps:", fps, "\n\tiF:", this.iF, "\n\tmiF:", this.miF, "\n}")
     }
 
-    // setMode changes loop mode
-    setMode(mode: string): void {
-        console.info("Setting mode from", this.mode, "to", mode)
-        this.mode = mode
-    }
-
     // pause cancels data & display loops
     pause(): void {
         console.info("paused")
@@ -45,7 +34,6 @@ export class Loop {
     // start triggers data & display update loops
     start(): void {
         if (!this.canStart()) {
-            this.renderer.scene.c.fillText("Loading...", 360, 295)
             setTimeout(this.start.bind(this), this.miF)
             return
         }
@@ -74,20 +62,16 @@ export class Loop {
     dataLoop(T: number): void {
         let nT = window.performance.now()
 
-        this.dataUpdater.update(this.mode, T)
+        this.dataUpdater.update(this.state.getState(), T)
         this.cbSeed = setTimeout((): void => this.dataLoop(this.miF), T - (window.performance.now() - nT))
     }
 
     // displayLoop is an iteration of the display loop, it calls itself perpetually through setTimeout
     displayLoop(T: number): void {
-        let nT = window.performance.now(),
-            updStatus = 0
+        let nT = window.performance.now()
 
-        updStatus = this.displayUpdater.update(this.mode, T, this.renderer)
+        this.displayUpdater.update(this.state.getState(), T)
         
-        if (updStatus > 0) {
-            this.renderer.render()
-        }
         this.dSeed = setTimeout((): void => this.displayLoop(this.miF), T - (window.performance.now() - nT))
     }
 }

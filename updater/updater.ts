@@ -2,13 +2,9 @@ export class Updater {
     nodes: any = {}
     defaultNameCounter: number = 0
 
-    constructor(public name: string) {
-        this.name = name
-    }
-
     // update runs through the update nodes and call them passing
     // an amount of ms and an entity to the callback
-    update(mode: string, T: number, entity: any) {
+    update(mode: string, T: number, entity?: any): number {
         if (!this.nodes.hasOwnProperty(mode)) {
             return 
         }

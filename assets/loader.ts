@@ -13,10 +13,15 @@ export class Loader {
     constructor(public basePath: string) {}
 
     loadFrameset(name: string, data: any, frameset: any, cb: any) {
-        this.loadImage(name, data, (img: any) => {
-            var fs = new Frameset(name, img);
+        let tmpName = name + "tmp"
+
+        this.stillLoadingIt++;
+        this.loadImage(tmpName, data, (img: any) => {
+            var fs = new Frameset(name, img)
             fs.parseFrames(frameset)
-            this.assets[name] = fs;
+            this.assets[name] = fs
+            delete this.assets[tmpName]
+            this.stillLoadingIt--;
             cb(fs)
         })
     }
@@ -31,12 +36,12 @@ export class Loader {
     loadImage = function(name: string, data: any, cb: any) {
         this.assets[name] = new Img(name, data);
         
-        this.assetLoadingIt++;
+        this.stillLoadingIt++;
         this.assets[name].loadWithCallback(() => {
             if (cb !== undefined) {
                 cb(this.assets[name]);
             }
-            this.assetLoadingIt--;
+            this.stillLoadingIt--;
             if (this.hasFinishedLoading) {
                 this.triggerOnLoaded()
             }
