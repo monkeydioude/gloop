@@ -9,6 +9,7 @@ export class Loop {
     fps: number
     iF: number
     miF: number
+    baseNT: number = 0
 
     constructor(fps: number, public state: StateMachine, public displayUpdater: Updater, public dataUpdater: Updater) {
         this.setFrequencies(fps)
@@ -60,18 +61,19 @@ export class Loop {
 
     // dataLoop is an iteration of the data loop, it calls itself perpetually through setTimeout
     dataLoop(T: number): void {
-        let nT = window.performance.now()
+        let nBefore = window.performance.now()
 
         this.dataUpdater.update(this.state.getState(), T)
-        this.cbSeed = setTimeout((): void => this.dataLoop(this.miF), T - (window.performance.now() - nT))
+        let nAfter = window.performance.now()
+        this.cbSeed = setTimeout((): void => this.dataLoop(this.miF), T - (nAfter - nBefore))
     }
 
     // displayLoop is an iteration of the display loop, it calls itself perpetually through setTimeout
     displayLoop(T: number): void {
-        let nT = window.performance.now()
+        let nBefore = window.performance.now()
 
         this.displayUpdater.update(this.state.getState(), T)
-        
-        this.dSeed = setTimeout((): void => this.displayLoop(this.miF), T - (window.performance.now() - nT))
+        let nAfter = window.performance.now()        
+        this.dSeed = setTimeout((): void => this.displayLoop(this.miF), T - (nAfter - nBefore))
     }
 }
