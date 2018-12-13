@@ -1,6 +1,5 @@
 import {Img} from "./img"
 import {Frameset} from "./frameset"
-import {NotLoadedYet} from "./notLoadedYet"
 import {CouldNotLoad} from '../errors/couldNotLoad'
 import {Error} from '../errors/error'
 import {Asset} from "./asset"
@@ -13,14 +12,15 @@ export class Loader {
     constructor(public basePath: string) {}
 
     loadFrameset(name: string, data: any, frameset: any, cb: any) {
-        let tmpName = name + "tmp"
+        let spriteName = name + "-sprite"
 
         this.stillLoadingIt++;
-        this.loadImage(tmpName, data, (img: any) => {
+        this.loadImage(spriteName, data, (img: any) => {
+            name = name + "-frameset"
             var fs = new Frameset(name, img)
             fs.parseFrames(frameset)
             this.assets[name] = fs
-            delete this.assets[tmpName]
+            delete this.assets[spriteName]
             this.stillLoadingIt--;
             cb(fs)
         })
@@ -105,8 +105,7 @@ export class Loader {
      */
     copy(name: string) {
         if (this.assets[name] == undefined) {
-            this.assets[name] = new NotLoadedYet(this.assets, name);
-            return this.assets[name];
+            return null
         }
 
         return this.assets[name].copy();

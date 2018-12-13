@@ -16,12 +16,12 @@ export class Frame {
     }
 
     render(renderer: Renderer, sprite: Img, x: number, y: number, T?: number): void {
-        this.stackedTime+= T
-        // console.log(y, this.sprite.getDecalY(), y + this.sprite.getDecalY())
+        this.stackedTime += T
         renderer.drawImage(sprite.getAsset(), x + sprite.getDecalX(), y + sprite.getDecalY(), this.w, this.h, this.sx, this.sy)
     }
 
     reset() {
-        this.stackedTime = 0
+        this.stackedTime -= this.duration
+        // this.stackedTime = 0
     }
 }

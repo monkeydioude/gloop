@@ -12,7 +12,6 @@ export class Frameset {
 
     render(renderer: Renderer, x: number, y: number, T?: number): void {
         this.setCurrentFrame()
-
         this.currentFrame.render(renderer, this.sprite, x, y, T)
         this.iterateFrame()
     }
