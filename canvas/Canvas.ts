@@ -1,9 +1,9 @@
-export class Canvas {
+export default class Canvas {
     canvas: any
     c: any
 
-    constructor(canvas: any) {
-        this.canvas = canvas
+    constructor(canvasID: string) {
+        this.canvas = document.querySelector(canvasID)
         this.c = this.canvas.getContext("2d")
     }
 

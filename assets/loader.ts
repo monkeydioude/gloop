@@ -4,7 +4,7 @@ import {CouldNotLoad} from '../errors/couldNotLoad'
 import {Error} from '../errors/error'
 import {Asset} from "./asset"
 
-export class Loader {
+export default class Loader {
     assets: {[name: string]: Asset} = {}
     stillLoadingIt: number = 0
     loadedCb: any = []

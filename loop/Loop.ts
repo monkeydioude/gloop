@@ -1,7 +1,7 @@
-import {Updater} from "./updater/updater"
-import {StateMachine} from "./stateMachine"
+import GraphicEngine from "../graphicEngine/GraphicEngine"
+import GameEngine from "../gameEngine/GameEngine"
 
-export class Loop {
+export default class Loop {
     cbSeed: NodeJS.Timeout
     dSeed: NodeJS.Timeout
     startingConditions: any = []
@@ -11,7 +11,7 @@ export class Loop {
     miF: number
     baseNT: number = 0
 
-    constructor(fps: number, public state: StateMachine, public displayUpdater: Updater, public dataUpdater: Updater) {
+    constructor(fps: number, private graphicEngine: GraphicEngine, private gameEngine: GameEngine) {
         this.setFrequencies(fps)
     }
     /**
@@ -63,7 +63,7 @@ export class Loop {
     dataLoop(T: number): void {
         let nBefore = window.performance.now()
 
-        this.dataUpdater.update(this.state.getState(), T)
+        this.gameEngine.doUpdates(T)
         let nAfter = window.performance.now()
         this.cbSeed = setTimeout((): void => this.dataLoop(this.miF), T - (nAfter - nBefore))
     }
@@ -72,7 +72,8 @@ export class Loop {
     displayLoop(T: number): void {
         let nBefore = window.performance.now()
 
-        this.displayUpdater.update(this.state.getState(), T)
+        this.graphicEngine.doDisplays(T)
+        this.graphicEngine.render()
         let nAfter = window.performance.now()        
         this.dSeed = setTimeout((): void => this.displayLoop(this.miF), T - (nAfter - nBefore))
     }
