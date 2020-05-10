@@ -1,46 +1,57 @@
 import GameEngine, { GameUpdate } from "./gameEngine/GameEngine"
-import GraphicEngine, { GraphicUpdate } from "./graphicEngine/GraphicEngine"
+import { GraphicUpdate } from "./graphicEngine/GraphicEngine"
 import Stateless from "./gameEngine/Stateless"
 import Renderer from "./graphicEngine/Renderer"
 import Loop from "./loop/Loop"
 import Canvas from "./canvas/Canvas"
+import XY from "./Xy"
+import Area from "./displayFragment/Area"
+import Cells from "./displayFragment/Cells"
 
 export interface Engine {
-    Update(cb: GameUpdate): void
-    Display(cb: GraphicUpdate): void
-    Start(): void
-    SetCanvasID(boardID: string, bufferID: string): void
-}
-
-export default class Gloop {
-    
+    update(cb: GameUpdate): void
+    display(cb: GraphicUpdate): void
+    start(): void
+    setCanvasID(boardID: string, bufferID: string): void
 }
 
 export class Mini implements Engine {
-    private GameEngine: GameEngine
-    private GraphicEngine: GraphicEngine
-    private Loop: Loop
+    private gameEngine: GameEngine
+    private renderer: Renderer
+    private loop: Loop
 
     constructor(fps: number, canvasBoardID: string, canvasBufferID: string) {
-        this.GraphicEngine = new Renderer()
-        this.SetCanvasID(canvasBoardID, canvasBufferID)
-        this.GameEngine = new Stateless()
-        this.Loop = new Loop(fps, this.GraphicEngine, this.GameEngine)
+        this.renderer = new Renderer()
+        this.setCanvasID(canvasBoardID, canvasBufferID)
+        this.gameEngine = new Stateless()
+        this.loop = new Loop(fps, this.renderer, this.gameEngine)
     }
 
-    SetCanvasID(boardID: string, bufferID: string): void {
-        this.GraphicEngine.setCanvas(new Canvas(boardID), new Canvas(bufferID))
+    setCanvasID(boardID: string, bufferID: string): void {
+        this.renderer.setCanvas(new Canvas(boardID), new Canvas(bufferID))
     }
 
-    Update(cb: GameUpdate): void {
-        this.GameEngine.update(cb)
+    update(cb: GameUpdate): void {
+        this.gameEngine.update(cb)
     }
 
-    Display(cb: GraphicUpdate): void {
-        this.GraphicEngine.display(cb)
+    display(cb: GraphicUpdate): void {
+        this.renderer.display(cb)
     }
 
-    Start(): void {
-        this.Loop.start()
+    start(): void {
+        this.loop.start()
+    }
+
+    getCanvasDimensions(): XY {
+        return new XY(this.renderer.getCanvas().width(), this.renderer.getCanvas().height())
+    }
+
+    newArea(x: number, y: number, width: number, height: number): Area {
+        return new Area(x, y, width, height, this.renderer)
+    }
+
+    newCells(x: number, y: number, nbColumns: number, nbLines: number, cellWidth: number, cellHeight: number) {
+        return new Cells(x, y, nbColumns, nbLines, cellWidth, cellHeight, this.renderer)
     }
 }

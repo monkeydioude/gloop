@@ -1,12 +1,9 @@
-import Canvas from "../canvas/Canvas"
+import Renderer from './Renderer'
 
-export interface GraphicUpdate {
-    (T: number, graphicEngine: GraphicEngine): void
+export default interface Display {
+    display(T: number, renderer: Renderer): void
 }
 
-export default interface GraphicEngine {
-    setCanvas(board: Canvas, buffer: Canvas): void
-    display(cb: (T: number, graphicEngine: GraphicEngine) => void, name?: string): void
-    doDisplays(T: number): void
-    render(): void
+export interface GraphicUpdate {
+    (T: number, renderer: Renderer): void
 }

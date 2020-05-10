@@ -19,5 +19,8 @@
   "homepage": "https://github.com/monkeydioude/gloop#readme",
   "dependencies": {
     "@types/node": "^10.12.10"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.3.11"
   }
 }

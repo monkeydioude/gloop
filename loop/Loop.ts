@@ -1,5 +1,5 @@
-import GraphicEngine from "../graphicEngine/GraphicEngine"
 import GameEngine from "../gameEngine/GameEngine"
+import Renderer from "../graphicEngine/Renderer"
 
 export default class Loop {
     cbSeed: NodeJS.Timeout
@@ -11,7 +11,7 @@ export default class Loop {
     miF: number
     baseNT: number = 0
 
-    constructor(fps: number, private graphicEngine: GraphicEngine, private gameEngine: GameEngine) {
+    constructor(fps: number, private graphicEngine: Renderer, private gameEngine: GameEngine) {
         this.setFrequencies(fps)
     }
     /**
