@@ -4,9 +4,10 @@ import Stateless from "./gameEngine/Stateless"
 import Renderer from "./graphicEngine/Renderer"
 import Loop from "./loop/Loop"
 import Canvas from "./canvas/Canvas"
-import XY from "./Xy"
 import Area from "./displayFragment/Area"
 import Cells from "./displayFragment/Cells"
+import Mouse from "./controls/Mouse"
+import ScenesHandler, { Scene } from "./scene/Scenes"
 
 export interface Engine {
     update(cb: GameUpdate): void
@@ -19,12 +20,14 @@ export class Mini implements Engine {
     private gameEngine: GameEngine
     private renderer: Renderer
     private loop: Loop
+    private scenes: ScenesHandler
 
     constructor(fps: number, canvasBoardID: string, canvasBufferID: string) {
         this.renderer = new Renderer()
         this.setCanvasID(canvasBoardID, canvasBufferID)
         this.gameEngine = new Stateless()
         this.loop = new Loop(fps, this.renderer, this.gameEngine)
+        this.scenes = new ScenesHandler()
     }
 
     setCanvasID(boardID: string, bufferID: string): void {
@@ -43,8 +46,8 @@ export class Mini implements Engine {
         this.loop.start()
     }
 
-    getCanvasDimensions(): XY {
-        return new XY(this.renderer.getCanvas().width(), this.renderer.getCanvas().height())
+    getCanvasDimensions(): number[] {
+        return [this.renderer.getCanvas().width(), this.renderer.getCanvas().height()]
     }
 
     newArea(x: number, y: number, width: number, height: number): Area {
@@ -53,5 +56,21 @@ export class Mini implements Engine {
 
     newCells(x: number, y: number, nbColumns: number, nbLines: number, cellWidth: number, cellHeight: number) {
         return new Cells(x, y, nbColumns, nbLines, cellWidth, cellHeight, this.renderer)
+    }
+
+    mouseInit() {
+        Mouse.init(this.renderer.getCanvas())
+    }
+
+    addScene(name: string, scene: Scene) {
+        this.scenes.add(name, scene)
+    }
+
+    switchScene(name: string) {
+        const err = this.scenes.switch(name)
+
+        if (err != null) {
+            console.log(err)
+        }
     }
 }

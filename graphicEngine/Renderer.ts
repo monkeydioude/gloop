@@ -1,5 +1,6 @@
 import Canvas from "../canvas/Canvas"
 import { GraphicUpdate } from "./GraphicEngine"
+import Event, { EventType } from "../Event"
 
 export default class Renderer {
     private scene: Canvas
@@ -11,6 +12,10 @@ export default class Renderer {
     constructor(xOverload?: number, yOverload?: number) {
         this.xOverload = xOverload
         this.yOverload = yOverload
+
+        Event.on(EventType.SCENE_WILL_CHANGE, () => {
+            this.toDisplay = []
+        })
     }
 
     setCanvas(scene: Canvas, buffer: Canvas): void {
@@ -52,7 +57,7 @@ export default class Renderer {
 
     writeText(text: string, x: number, y: number, size?: number, fontFamily?: string) {
         if (size == undefined) {
-            size = 10
+            size = 20
         }
         const shalf = size/2
         this.buffer.writeText(text, x - shalf, y + shalf, size, fontFamily)

@@ -12,6 +12,7 @@ export default class Cells implements Fragment {
         private renderer: Renderer) {
     }
 
+    // @TODO
     drawLine(fX: number, fY: number, tX: number, tY: number, thickness?: number): void {
         // this.renderer.drawLine(this.x + fX, this.y + fY, this.x + tX, tY, thickness)
     }
@@ -60,10 +61,40 @@ export default class Cells implements Fragment {
         return this
     }
 
-    getWidth(): number {
-        return this.cellWidth * this.nbLines
+    update(cb: (T: number, f: Fragment) => void): Fragment {
+        this.renderer.display((T: number, r: Renderer) => {
+            cb(T, this)
+        })
+        return this
     }
+
+    getWidth(): number {
+        return this.cellWidth * this.nbColumns
+    }
+
     getHeight(): number {
-        return this.cellHeight * this.nbColumns
+        return this.cellHeight * this.nbLines
+    }
+
+    getX(): number {
+        return this.x
+    }
+
+    getY(): number {
+        return this.y
+    }
+
+    getRelativeXY(x: number, y: number): number[] {
+        return [
+            Math.floor(x / this.cellWidth),
+            Math.floor(y / this.cellHeight)
+        ]
+    }
+
+    isInside(x: number, y: number): boolean {
+        return x >= this.x &&
+            x <= this.x + this.getWidth() &&
+            y >= this.y &&
+            y <= this.y + this.getHeight()
     }
 }

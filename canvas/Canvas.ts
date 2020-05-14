@@ -1,3 +1,5 @@
+import { parse } from "path"
+
 export default class Canvas {
     canvas: any
     ctx: any
@@ -50,10 +52,21 @@ export default class Canvas {
         this.ctx.drawImage(img, sx, sy, w, h, x, y, w, h);
     }
 
-    writeText(text: string, x: number, y: number, size?: number, fontFamily?: string) {
+    parseFontParameters(size?: number, fontFamily?: string): string {
         if (size != undefined && fontFamily != undefined) {
-            this.ctx.font = size +"px "+ fontFamily;
+            return size + "px " + fontFamily
         }
+        const fontP = this.ctx.font.split(' ')
+        if (size != undefined) {
+            return size + "px " + fontP[fontP.length - 1]
+        }
+        if (fontFamily != undefined) {
+            return fontP[0] + " " + fontFamily
+        }
+    }
+
+    writeText(text: string, x: number, y: number, size?: number, fontFamily?: string) {
+        this.ctx.font = this.parseFontParameters(size, fontFamily)
         this.ctx.fillText(text, x, y);
     }
 

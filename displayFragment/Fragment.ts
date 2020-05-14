@@ -7,4 +7,8 @@ export interface Fragment {
     display(cb: (T: number, f: Fragment) => void): Fragment
     getWidth(): number
     getHeight(): number
+    getX(): number
+    getX(): number
+    getRelativeXY(x: number, y: number): number[]
+    isInside(x: number, y: number): boolean
 }

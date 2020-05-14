@@ -74,4 +74,23 @@ export default class Area implements Fragment {
     getHeight(): number {
         return this.height
     }
+
+    getX(): number {
+        return this.x
+    }
+
+    getY(): number {
+        return this.y
+    }
+    getRelativeXY(x: number, y: number): number[] {
+        return [
+            this.x,
+            this.y
+        ]
+    }
+
+    //@TODO
+    isInside(x: number, y: number): boolean {
+        return true
+    }
 }
