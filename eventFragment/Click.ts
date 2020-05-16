@@ -1,4 +1,4 @@
-import { Fragment } from "../displayFragment/Fragment";
+import Fragment from "../displayFragment/Fragment";
 import Mouse from '../controls/Mouse'
 
 class Click {

@@ -1,4 +1,4 @@
-import { Fragment } from "./Fragment"
+import Fragment from "./Fragment"
 import Renderer from "../graphicEngine/Renderer"
 
 
@@ -92,5 +92,9 @@ export default class Area implements Fragment {
     //@TODO
     isInside(x: number, y: number): boolean {
         return true
+    }
+
+    spawnChildren(x: number, y: number, width: number, height: number) {
+        return new Area(this.x + x, this.y + y, width, height, this.renderer)
     }
 }

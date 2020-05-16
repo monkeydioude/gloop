@@ -1,4 +1,4 @@
-import { Fragment } from "./Fragment";
+import Fragment from "./Fragment";
 import Renderer from "../graphicEngine/Renderer";
 
 export default class Cells implements Fragment {
@@ -17,7 +17,6 @@ export default class Cells implements Fragment {
         // this.renderer.drawLine(this.x + fX, this.y + fY, this.x + tX, tY, thickness)
     }
 
-
     drawRect(cellX: number, cellY: number, w: number, h: number, color: string, thickness?: number): void {
         if (cellX < 0) {
             cellX = this.nbColumns + cellX
@@ -25,11 +24,11 @@ export default class Cells implements Fragment {
         if (cellY < 0) {
             cellY = this.nbLines + cellY
         }
-        this.renderer.drawRect(this.x + (cellX * this.cellWidth), this.y + (cellY * this.cellHeight), w, h, color, thickness)
+        this.renderer.drawRect(this.x + (cellX * this.cellWidth), this.y + (cellY * this.cellHeight), w * this.cellWidth, h * this.cellHeight, color, thickness)
     }
 
     makeBorder(x: number, y: number, color: string) {
-        this.drawRect(x, y, this.cellWidth, this.cellHeight, color)
+        this.drawRect(x, y, 1, 1, color)
     }
     
     fillRect(fX: number, fY: number, w: number, h: number, color: string): void {
@@ -41,6 +40,7 @@ export default class Cells implements Fragment {
         this.renderer.drawImage(image, this.x + x, this.y + y, w, h, this.x + sx, this.x + sy)
     }
 
+    // @todo: create Text object, so the role of text placement is transfered to a different entity, Fragment shouldn't do it
     writeText(text: string, x: number, y: number, size?: number, fontFamily?: string, color?: string) {
         if (size == undefined) {
             size = 10
@@ -96,5 +96,17 @@ export default class Cells implements Fragment {
             x <= this.x + this.getWidth() &&
             y >= this.y &&
             y <= this.y + this.getHeight()
+    }
+
+    spawnChildren(x: number, y: number, width: number, height: number): Cells {
+        return new Cells(
+            this.x + x*this.cellWidth,
+            this.y + y*this.cellHeight,
+            width,
+            height,
+            this.cellWidth,
+            this.cellHeight,
+            this.renderer
+            )
     }
 }

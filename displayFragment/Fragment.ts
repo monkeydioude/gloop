@@ -1,4 +1,4 @@
-export interface Fragment {
+export default interface Fragment {
     drawLine(fX: number, fY: number, tX: number, tY: number, thickness?: number): void
     drawRect(fX: number, fY: number, w: number, h: number, color: string, thickness?: number): void
     fillRect(fX: number, fY: number, w: number, h: number, color: string): void
@@ -11,4 +11,5 @@ export interface Fragment {
     getX(): number
     getRelativeXY(x: number, y: number): number[]
     isInside(x: number, y: number): boolean
+    spawnChildren(x: number, y: number, width: number, height: number): Fragment
 }
