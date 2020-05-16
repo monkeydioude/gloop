@@ -46,7 +46,7 @@ export default class Renderer {
         this.buffer.drawRect(fX+0.5, fY+0.5, w, h, color, thickness)
     }
 
-    fillRect(fX: number, fY: number, w: number, h: number, color:string): void {
+    fillRect(fX: number, fY: number, w: number, h: number, color: string): void {
         this.buffer.fillRect(fX+0.5, fY+0.5, w, h, color)
     }
 
@@ -55,12 +55,12 @@ export default class Renderer {
         this.buffer.drawImage(image, x, y, w, h, sx, sy)
     }
 
-    writeText(text: string, x: number, y: number, size?: number, fontFamily?: string) {
+    writeText(text: string, x: number, y: number, size?: number, fontFamily?: string, color?: string) {
         if (size == undefined) {
             size = 20
         }
         const shalf = size/2
-        this.buffer.writeText(text, x - shalf, y + shalf, size, fontFamily)
+        this.buffer.writeText(text, x - shalf, y + shalf, size, fontFamily, color)
     }
 
     render(): void {

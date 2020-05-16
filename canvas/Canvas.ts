@@ -1,12 +1,12 @@
-import { parse } from "path"
-
 export default class Canvas {
     canvas: any
     ctx: any
+    private defaultColor: string
 
     constructor(canvasID: string) {
         this.canvas = document.querySelector(canvasID)
         this.ctx = this.canvas.getContext("2d")
+        this.defaultColor = "#000000"
     }
 
     drawLine(fX: number, fY: number, tX: number, tY: number, thickness?: number): void {
@@ -65,9 +65,13 @@ export default class Canvas {
         }
     }
 
-    writeText(text: string, x: number, y: number, size?: number, fontFamily?: string) {
+    writeText(text: string, x: number, y: number, size?: number, fontFamily?: string, color?: string) {
+        if (color != undefined) {
+            this.ctx.fillStyle = color
+        }
         this.ctx.font = this.parseFontParameters(size, fontFamily)
         this.ctx.fillText(text, x, y);
+        this.ctx.fillStyle = this.defaultColor
     }
 
     width(): number {
@@ -90,5 +94,9 @@ export default class Canvas {
     // snapshot captures the canvas and returns its ImageData equivalent
     snapshot(): ImageData {
         return this.ctx.getImageData(0, 0, this.width(), this.height());
+    }
+
+    setDefaultColor(color: string) {
+        this.defaultColor = color
     }
 }

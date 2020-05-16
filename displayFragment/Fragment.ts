@@ -3,7 +3,7 @@ export interface Fragment {
     drawRect(fX: number, fY: number, w: number, h: number, color: string, thickness?: number): void
     fillRect(fX: number, fY: number, w: number, h: number, color: string): void
     drawImage(image: HTMLImageElement, x: number, y: number, w: number, h: number, sx?: number, sy?: number): void
-    writeText(text: string, x: number, y: number, size?: number, fontFamily?: string): void
+    writeText(text: string, x: number, y: number, size?: number, fontFamily?: string, color?: string): void
     display(cb: (T: number, f: Fragment) => void): Fragment
     getWidth(): number
     getHeight(): number

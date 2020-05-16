@@ -47,11 +47,11 @@ export default class Area implements Fragment {
         this.renderer.drawImage(image, this.x + x, this.y + y, w, h, this.x + sx, this.x + sy)
     }
 
-    writeText(text: string, x: number, y: number, size?: number, fontFamily?: string) {
+    writeText(text: string, x: number, y: number, size?: number, fontFamily?: string, color?: string) {
         if (size == undefined) {
             size = 10
         }
-        this.renderer.writeText(text, this.x + x, this.y + y, size, fontFamily)
+        this.renderer.writeText(text, this.x + x, this.y + y, size, fontFamily, color)
     }
 
     describeFragment(x: number, y: number, width: number, height: number): void {

@@ -41,7 +41,7 @@ export default class Cells implements Fragment {
         this.renderer.drawImage(image, this.x + x, this.y + y, w, h, this.x + sx, this.x + sy)
     }
 
-    writeText(text: string, x: number, y: number, size?: number, fontFamily?: string) {
+    writeText(text: string, x: number, y: number, size?: number, fontFamily?: string, color?: string) {
         if (size == undefined) {
             size = 10
         }
@@ -51,7 +51,7 @@ export default class Cells implements Fragment {
         if (y < 0) {
             y = this.nbLines + y
         }
-        this.renderer.writeText(text, this.x + (x * this.cellWidth) + (this.cellWidth / 2), this.y + (y * this.cellHeight) + (this.cellHeight / 2), size, fontFamily)
+        this.renderer.writeText(text, this.x + (x * this.cellWidth) + (this.cellWidth / 2), this.y + (y * this.cellHeight) + (this.cellHeight / 2), size, fontFamily, color)
     }
 
     display(cb: (T: number, f: Fragment) => void): Fragment {
